@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package lots;
+option go_package =  "./lotspb";
+
+message LotsRequest {
+    int64 limit = 1;
+}
+
+message Stock {
+    int64 Count = 1;
+    int64 Lots = 2;
+    string Ticker = 3;
+    string Name = 4;
+    string CurrentPrice = 5;
+    string BuyPrice = 6;
+    string Diff = 7;
+    string DiffPercent = 8;
+    string DiffWithCommission = 9;
+    string DiffPercentWithCommission = 10;
+    string Currency = 11;
+    string TotalCost = 12;
+}
+
+
+message Lot {
+    double TotalMoneyRU = 1;
+    double FreeMoneyRU = 2;
+    repeated Stock Stocks = 3;
+}
+
+message LotsResponse {
+    Lot lot = 1;
+}
+
+service LotsService {
+    rpc ActiveLots(LotsRequest) returns(stream LotsResponse) {};
+}
